@@ -1095,6 +1095,64 @@
       .footer-nav { flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
       .footer-legal { flex-direction: column; gap: 0.75rem; }
     }
+    /* ==================== INQUIRY MODAL (added) ==================== */
+    a.btn.tfc-trigger, .tfc-trigger { cursor: pointer; }
+    .tfc-overlay {
+      position: fixed; inset: 0; z-index: 2000;
+      display: none; align-items: center; justify-content: center;
+      padding: 1.5rem; background: rgba(35,35,35,0.55); backdrop-filter: blur(6px);
+    }
+    .tfc-overlay.open { display: flex; }
+    .tfc-modal {
+      background: var(--bg-light); width: 100%; max-width: 540px;
+      max-height: 90vh; overflow-y: auto; border-radius: 6px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.3); padding: 2.5rem;
+      position: relative; animation: tfcIn .25s ease;
+    }
+    @keyframes tfcIn { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: translateY(0); } }
+    .tfc-close {
+      position: absolute; top: 0.9rem; right: 0.9rem; width: 38px; height: 38px;
+      border: none; background: none; font-size: 1.7rem; line-height: 1;
+      color: var(--text-muted); cursor: pointer; border-radius: 50%;
+    }
+    .tfc-close:hover { background: rgba(0,0,0,0.06); color: var(--text); }
+    .tfc-modal h3 {
+      font-family: var(--font-display); font-weight: 400; font-size: 1.5rem;
+      letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .tfc-intro { font-size: 1rem; color: var(--text-light); margin-bottom: 1.5rem; }
+    .tfc-field { margin-bottom: 1.1rem; }
+    .tfc-field label {
+      display: block; font-family: var(--font-display); font-size: 0.72rem;
+      font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text); margin-bottom: 0.4rem;
+    }
+    .tfc-field .req { color: #b3261e; }
+    .tfc-field input, .tfc-field select, .tfc-field textarea {
+      width: 100%; padding: 0.7rem 0.8rem; font-family: var(--font-body);
+      font-size: 1rem; color: var(--text); background: var(--white);
+      border: 1px solid var(--border); border-radius: 4px;
+    }
+    .tfc-field textarea { resize: vertical; min-height: 90px; }
+    .tfc-field input:focus, .tfc-field select:focus, .tfc-field textarea:focus {
+      outline: none; border-color: var(--accent-dark);
+      box-shadow: 0 0 0 2px rgba(222,193,90,0.35);
+    }
+    .tfc-checks { display: flex; flex-wrap: wrap; gap: 0.45rem 1.25rem; }
+    .tfc-checks label {
+      display: flex; align-items: center; gap: 0.4rem; font-family: var(--font-body);
+      font-size: 1rem; letter-spacing: 0; text-transform: none; font-weight: 400;
+      color: var(--text-light); margin: 0;
+    }
+    .tfc-checks input { width: auto; }
+    .tfc-modal .btn { margin-top: 0.5rem; }
+    .tfc-msg { margin-top: 1rem; font-size: 0.95rem; min-height: 1.2em; }
+    .tfc-msg.error { color: #b3261e; }
+    .tfc-thanks { text-align: center; padding: 1rem 0; }
+    .tfc-thanks .mark { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    body.tfc-open { overflow: hidden; }
+    @media (max-width: 600px) { .tfc-modal { padding: 1.75rem 1.25rem; } }
+
   </style>
 </head>
 <body>
@@ -1254,7 +1312,7 @@
           <div class="vendor-cta">
             <h3>Become a Vendor</h3>
             <p>We support beginning and historically marginalized growers with access to our market.</p>
-            <a href="mailto:info@tuckawayfoodcommons.org?subject=Vendor%20Inquiry" class="btn">Connect With Us</a>
+            <a class="btn tfc-trigger" data-tfc-form="vendor">Connect With Us</a>
           </div>
         </div>
       </div>
@@ -1351,7 +1409,7 @@
             </svg>
           </div>
           <h3>Our Family</h3>
-          <p>Chuck and Laurel Cox built Tuckaway Farm starting in 1983. Now Dorn and Sarah continue the legacy, raising the next generation on the land.</p>
+          <p>Chuck and Laurel Cox began building Tuckaway Farm in 1983. Now Dorn and Sarah continue multi-generational community agriculture — adding their own fingerprints to the land.</p>
         </div>
       </div>
     </div>
@@ -1420,7 +1478,7 @@
               <li>A/V equipment included</li>
               <li>Trails through fields & forest</li>
             </ul>
-            <a href="mailto:info@tuckawayfoodcommons.org?subject=Emerson%20House%20Inquiry" class="btn">Inquire Now</a>
+            <a class="btn tfc-trigger" data-tfc-form="space" data-tfc-prefill='{"space":"The Emerson House"}'>Inquire Now</a>
           </div>
         </div>
         <div class="space-card">
@@ -1434,7 +1492,7 @@
               <li>Water access for cleanup</li>
               <li>Beautiful farm backdrop</li>
             </ul>
-            <a href="mailto:info@tuckawayfoodcommons.org?subject=Outdoor%20Event%20Space%20Inquiry" class="btn">Inquire Now</a>
+            <a class="btn tfc-trigger" data-tfc-form="space" data-tfc-prefill='{"space":"Outdoor event space"}'>Inquire Now</a>
           </div>
         </div>
       </div>
@@ -1519,7 +1577,7 @@
           </div>
           <h3>Volunteer</h3>
           <p>Help maintain gardens, assist at events, and support the farm's mission.</p>
-          <a href="mailto:info@tuckawayfoodcommons.org?subject=Volunteer%20Inquiry" class="btn">Learn More</a>
+          <a class="btn tfc-trigger" data-tfc-form="volunteer">Learn More</a>
         </div>
         <div class="involve-card">
           <div class="litho-icon">
@@ -1530,7 +1588,7 @@
           </div>
           <h3>Donate</h3>
           <p>Support programs for food access, education, and sustainable agriculture.</p>
-          <a href="mailto:info@tuckawayfoodcommons.org?subject=Donation%20Inquiry" class="btn">Give Today</a>
+          <a class="btn tfc-trigger" data-tfc-form="donate">Give Today</a>
         </div>
         <div class="involve-card">
           <div class="litho-icon">
@@ -1540,7 +1598,7 @@
           </div>
           <h3>Sponsor</h3>
           <p>Partner with us to strengthen the local food system and build community.</p>
-          <a href="mailto:info@tuckawayfoodcommons.org?subject=Sponsorship%20Inquiry" class="btn">Become a Sponsor</a>
+          <a class="btn tfc-trigger" data-tfc-form="sponsor">Become a Sponsor</a>
         </div>
       </div>
     </div>
@@ -1590,7 +1648,9 @@
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const href = this.getAttribute('href');
+        if (href === '#' || !href) return;
+        const target = document.querySelector(href);
         if (target) {
           const headerOffset = 80;
           const elementPosition = target.getBoundingClientRect().top;
@@ -1615,6 +1675,206 @@
     const style = document.createElement('style');
     style.textContent = '.visible{opacity:1!important;transform:translateY(0)!important}';
     document.head.appendChild(style);
+  </script>
+
+  <!-- ==================== INQUIRY POP-UP FORMS (added) ==================== -->
+  <script>
+  (function () {
+    var INBOX = "info@tuckawayfoodcommons.org";
+
+    // ===== Form delivery provider =====
+    // Active provider: "web3forms" (in use) or "formsubmit" (kept as backup).
+    // To switch back to FormSubmit, just change this one value to "formsubmit".
+    var PROVIDER = "web3forms";
+
+    // Web3Forms: free access key bound to INBOX. Get one in ~30 seconds at
+    // https://web3forms.com (enter info@tuckawayfoodcommons.org; the key is shown
+    // on-screen and emailed there). Paste it below. This key is public/safe to ship.
+    var WEB3FORMS_KEY = "e1826f78-0efe-47f3-94d5-aa0336acf3d3";
+
+    // FormSubmit backup: no key needed. Activate once (submit a form, then click
+    // the email link sent to INBOX). After activating you may replace INBOX in the
+    // URL with the random alias FormSubmit gives you, to keep the address private.
+    var FORMSUBMIT_URL = "https://formsubmit.co/ajax/" + INBOX;
+
+    var FORMS = {
+      vendor: { label: "Become a Vendor", title: "Connect With Us",
+        prefix: "[TFC Vendor Inquiry]",
+        intro: "Tell us about your farm or food business and we will be in touch about selling through the collaborative market.",
+        fields: [
+          { name: "business_name", label: "Farm / business name", required: true },
+          { name: "name", label: "Your name", required: true },
+          { name: "email", label: "Email", type: "email", required: true },
+          { name: "phone", label: "Phone", type: "tel" },
+          { name: "products", label: "What do you produce?", type: "textarea", required: true },
+          { name: "message", label: "Anything else?", type: "textarea" }
+        ] },
+      space: { label: "Host Your Event", title: "Space Inquiry",
+        prefix: "[TFC Space Inquiry]",
+        intro: "Tell us about your event and we will follow up with availability and details.",
+        fields: [
+          { name: "name", label: "Your name", required: true },
+          { name: "email", label: "Email", type: "email", required: true },
+          { name: "phone", label: "Phone", type: "tel" },
+          { name: "space", label: "Space", type: "select", options: ["The Emerson House", "Outdoor event space", "Not sure yet"] },
+          { name: "event_type", label: "Type of event" },
+          { name: "preferred_date", label: "Preferred date(s)" },
+          { name: "guests", label: "Estimated guests", type: "number" },
+          { name: "message", label: "Tell us about your event", type: "textarea" }
+        ] },
+      volunteer: { label: "Get Involved", title: "Volunteer With Us",
+        prefix: "[TFC Volunteer]",
+        intro: "Lend a hand in the gardens, at events, or around the farm.",
+        fields: [
+          { name: "name", label: "Your name", required: true },
+          { name: "email", label: "Email", type: "email", required: true },
+          { name: "phone", label: "Phone", type: "tel" },
+          { name: "interests", label: "Where would you like to help?", type: "checks", options: ["Gardens", "Events", "Farm work", "Store / stocking"] },
+          { name: "availability", label: "Availability" },
+          { name: "message", label: "Notes", type: "textarea" }
+        ] },
+      donate: { label: "Get Involved", title: "Support TFC",
+        prefix: "[TFC Donation Interest]",
+        intro: "Thank you for supporting food access, education, and sustainable agriculture. Share your interest and we will be in touch about ways to give.",
+        fields: [
+          { name: "name", label: "Your name", required: true },
+          { name: "email", label: "Email", type: "email", required: true },
+          { name: "interest", label: "I would like to support", type: "select", options: ["A one-time gift", "Recurring giving", "Sponsoring a program", "In-kind / materials", "Not sure yet"] },
+          { name: "message", label: "Message", type: "textarea" }
+        ] },
+      sponsor: { label: "Get Involved", title: "Become a Sponsor",
+        prefix: "[TFC Sponsorship]",
+        intro: "Partner with us to strengthen the local food system and build community.",
+        fields: [
+          { name: "name", label: "Your name", required: true },
+          { name: "organization", label: "Organization" },
+          { name: "email", label: "Email", type: "email", required: true },
+          { name: "phone", label: "Phone", type: "tel" },
+          { name: "message", label: "How would you like to partner?", type: "textarea", required: true }
+        ] }
+    };
+
+    function esc(s) {
+      return String(s).replace(/[&<>"]/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+      });
+    }
+
+    function fieldHTML(f) {
+      var req = f.required ? ' <span class="req">*</span>' : "";
+      var id = "tfc_" + f.name;
+      var r = f.required ? " required" : "";
+      if (f.type === "textarea")
+        return '<div class="tfc-field"><label for="' + id + '">' + esc(f.label) + req + '</label><textarea id="' + id + '" name="' + f.name + '"' + r + "></textarea></div>";
+      if (f.type === "select")
+        return '<div class="tfc-field"><label for="' + id + '">' + esc(f.label) + req + '</label><select id="' + id + '" name="' + f.name + '"' + r + '><option value="" disabled selected>Choose...</option>' + f.options.map(function (o) { return '<option value="' + esc(o) + '">' + esc(o) + "</option>"; }).join("") + "</select></div>";
+      if (f.type === "checks")
+        return '<div class="tfc-field"><label>' + esc(f.label) + req + '</label><div class="tfc-checks">' + f.options.map(function (o) { return '<label><input type="checkbox" name="' + f.name + '" value="' + esc(o) + '"> ' + esc(o) + "</label>"; }).join("") + "</div></div>";
+      return '<div class="tfc-field"><label for="' + id + '">' + esc(f.label) + req + '</label><input id="' + id + '" type="' + (f.type || "text") + '" name="' + f.name + '"' + r + "></div>";
+    }
+
+    var overlay = document.createElement("div");
+    overlay.className = "tfc-overlay";
+    overlay.innerHTML = '<div class="tfc-modal" role="dialog" aria-modal="true" aria-labelledby="tfc-title"><button class="tfc-close" type="button" aria-label="Close">&times;</button><div class="tfc-body"></div></div>';
+    document.body.appendChild(overlay);
+    var body = overlay.querySelector(".tfc-body");
+    var lastFocus = null;
+
+    function openForm(key, prefill) {
+      var cfg = FORMS[key];
+      if (!cfg) return;
+      lastFocus = document.activeElement;
+      var h = '<span class="section-label">' + esc(cfg.label) + "</span>";
+      h += '<h3 id="tfc-title">' + esc(cfg.title) + "</h3>";
+      if (cfg.intro) h += '<p class="tfc-intro">' + esc(cfg.intro) + "</p>";
+      h += '<form class="tfc-form" novalidate>';
+      h += '<input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">';
+      cfg.fields.forEach(function (f) { h += fieldHTML(f); });
+      h += '<button type="submit" class="btn btn-filled">Send</button>';
+      h += '<div class="tfc-msg" role="status"></div></form>';
+      body.innerHTML = h;
+      if (prefill) Object.keys(prefill).forEach(function (n) {
+        var el = body.querySelector('[name="' + n + '"]'); if (el) el.value = prefill[n];
+      });
+      body.querySelector("form").addEventListener("submit", function (e) { e.preventDefault(); submitForm(key, e.target); });
+      overlay.classList.add("open");
+      document.body.classList.add("tfc-open");
+      var first = body.querySelector("input:not([type=hidden]):not([tabindex='-1']), select, textarea");
+      if (first) first.focus();
+    }
+
+    function closeModal() {
+      overlay.classList.remove("open");
+      document.body.classList.remove("tfc-open");
+      body.innerHTML = "";
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    function collect(form) {
+      var data = {}, fd = new FormData(form);
+      fd.forEach(function (v, k) { data[k] = (k in data) ? [].concat(data[k], v).join(", ") : v; });
+      return data;
+    }
+
+    function submitForm(key, form) {
+      var data = collect(form);
+      if (data._honey) { closeModal(); return; }
+      delete data._honey;
+      var msg = form.querySelector(".tfc-msg");
+      var btn = form.querySelector("button[type=submit]");
+      msg.className = "tfc-msg"; msg.textContent = "Sending...";
+      btn.disabled = true;
+      var subject = (FORMS[key].prefix || "[TFC]") + " - " + (data.name || data.business_name || "New inquiry");
+
+      var request;
+      if (PROVIDER === "web3forms") {
+        if (/PASTE-YOUR/.test(WEB3FORMS_KEY))
+          console.warn("Web3Forms key not set yet — paste your access key into WEB3FORMS_KEY.");
+        request = fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify(Object.assign(
+            { access_key: WEB3FORMS_KEY, subject: subject, from_name: "Tuckaway Food Commons website" },
+            data))
+        });
+      } else {
+        request = fetch(FORMSUBMIT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify(Object.assign(
+            { _subject: subject, _template: "table", _captcha: "false" },
+            data))
+        });
+      }
+
+      request.then(function (r) {
+        if (!r.ok) throw new Error("status " + r.status);
+        return r.json().catch(function () { return { success: true }; });
+      }).then(function (j) {
+        if (j && (j.success === false || j.success === "false")) throw new Error(j.message || "rejected");
+        body.innerHTML = '<div class="tfc-thanks"><div class="mark">&#127806;</div><h3>Thank You</h3><p class="tfc-intro">Your message was sent to the Tuckaway Food Commons team. We will be in touch soon.</p><button class="btn" type="button" data-tfc-close>Close</button></div>';
+      }).catch(function () {
+        btn.disabled = false;
+        msg.className = "tfc-msg error";
+        msg.innerHTML = 'Something went wrong - please email <a href="mailto:' + INBOX + '">' + INBOX + "</a>.";
+      });
+    }
+
+    document.addEventListener("click", function (e) {
+      var t = e.target.closest("[data-tfc-form]");
+      if (t) {
+        e.preventDefault();
+        var pf = t.getAttribute("data-tfc-prefill");
+        openForm(t.getAttribute("data-tfc-form"), pf ? JSON.parse(pf) : null);
+        return;
+      }
+      if (e.target.closest(".tfc-close") || e.target.closest("[data-tfc-close]")) { closeModal(); return; }
+      if (e.target === overlay) closeModal();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && overlay.classList.contains("open")) closeModal();
+    });
+  })();
   </script>
 
 </body>
