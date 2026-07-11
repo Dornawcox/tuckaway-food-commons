@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DWeb Camp · Talk to the Land</title>
+<style>
+  /* Palette sampled from the "Community Governed Organization" toolkit postcard */
+  :root{
+    --cream:#FAE8C2; --cream-2:#F3D4A4;
+    --terra:#C4703A; --terra-lt:#DD985C;
+    --teal:#66B3AD; --teal-dk:#3C697D;
+    --gold:#E4C06A; --ink:#22302f; --muted:#5c726f;
+    --panel:#fffdf7; --line:#e9d9b6; --err:#b3402c;
+    --btn:var(--teal-dk); --btn-ink:#ffffff; --focus:var(--terra);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --cream:#12211f; --cream-2:#183028;
+      --ink:#eaf5ee; --muted:#a7c6bd; --panel:#132522; --line:#274038;
+      --btn:var(--teal); --btn-ink:#06231d; --focus:var(--terra-lt);
+    }
+  }
+  :root[data-theme="light"]{ --cream:#FAE8C2; --ink:#22302f; --panel:#fffdf7; --line:#e9d9b6; --muted:#5c726f; --btn:var(--teal-dk); --btn-ink:#fff; }
+  :root[data-theme="dark"]{ --cream:#12211f; --ink:#eaf5ee; --panel:#132522; --line:#274038; --muted:#a7c6bd; --btn:var(--teal); --btn-ink:#06231d; }
+
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{min-height:100vh;background:var(--cream);color:var(--ink);
+    font:16px/1.55 ui-rounded,"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+    display:flex;align-items:flex-start;justify-content:center;padding:20px 15px 56px;
+    overflow-x:hidden;position:relative}
+  .blob{position:fixed;filter:blur(2px);opacity:.55;z-index:0;border-radius:46% 54% 57% 43%/49% 41% 59% 51%;pointer-events:none}
+  .b1{width:60vw;height:44vw;max-width:520px;max-height:380px;background:var(--terra-lt);top:-8%;left:-14%}
+  .b2{width:52vw;height:40vw;max-width:460px;max-height:360px;background:var(--teal);top:2%;right:-16%;border-radius:57% 43% 43% 57%/44% 56% 44% 56%}
+  .b3{width:66vw;height:46vw;max-width:560px;max-height:400px;background:var(--cream-2);bottom:-12%;left:-6%;opacity:.5}
+  .b4{width:46vw;height:38vw;max-width:420px;max-height:340px;background:var(--teal-dk);bottom:-14%;right:-12%;opacity:.4}
+
+  .card{position:relative;z-index:1;width:100%;max-width:540px;background:var(--panel);
+    border:1px solid var(--line);border-radius:22px;padding:0 0 26px;overflow:hidden;
+    box-shadow:0 18px 50px rgba(60,40,20,.18)}
+
+  header{position:relative;padding:22px 24px 20px;
+    background:linear-gradient(135deg,var(--terra-lt) 0%,var(--gold) 42%,var(--teal) 100%)}
+  header .path{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+  .kicker{position:relative;display:inline-flex;align-items:center;gap:9px;
+    color:#fff;font-weight:700;letter-spacing:.14em;font-size:12px;text-transform:uppercase;
+    text-shadow:0 1px 4px rgba(0,0,0,.28)}
+  .kicker svg{width:20px;height:20px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.35))}
+  header h1{position:relative;margin:.5rem 0 .1rem;color:#fff;font-size:1.72rem;line-height:1.1;
+    font-weight:800;letter-spacing:.005em;text-shadow:0 2px 8px rgba(0,0,0,.28)}
+  header .way{position:relative;margin:.15rem 0 0;color:#fff;font-weight:600;font-size:.95rem;
+    text-shadow:0 1px 5px rgba(0,0,0,.3)}
+
+  .body{padding:20px 24px 0}
+  .lead{margin:.1rem 0 1rem;color:var(--muted)}
+  label{display:block;font-weight:700;margin:.95rem 0 .35rem;font-size:.92rem;letter-spacing:.01em}
+  input[type=text],input[type=email],textarea{width:100%;padding:12px 13px;border-radius:12px;
+    border:1.5px solid var(--line);background:transparent;color:var(--ink);font:inherit}
+  input::placeholder,textarea::placeholder{color:color-mix(in srgb,var(--muted) 75%,transparent)}
+  input:focus,textarea:focus{outline:2.5px solid var(--focus);outline-offset:1px;border-color:transparent}
+  textarea{min-height:86px;resize:vertical}
+  .consent{display:flex;gap:11px;align-items:flex-start;margin:1.1rem 0 .3rem;color:var(--muted);font-size:.9rem}
+  .consent input{margin-top:2px;width:19px;height:19px;accent-color:var(--terra)}
+  button{margin-top:1.25rem;width:100%;padding:15px;border:0;border-radius:40px;
+    background:var(--btn);color:var(--btn-ink);font:800 1.06rem ui-rounded,system-ui;
+    letter-spacing:.02em;cursor:pointer;box-shadow:0 6px 18px rgba(60,105,125,.28)}
+  button:active{transform:translateY(1px)}
+  button:disabled{opacity:.6;cursor:default}
+  .ok,.err{margin:1rem 24px 0;padding:14px 15px;border-radius:13px;font-weight:600}
+  .ok{background:color-mix(in srgb,var(--teal) 26%,var(--panel));color:var(--ink);
+    border:1.5px solid var(--teal)}
+  .err{background:color-mix(in srgb,var(--err) 16%,var(--panel));color:var(--err)}
+  .foot{margin:1.2rem 24px 0;padding-top:14px;border-top:1px dashed var(--line);
+    color:var(--muted);font-size:.78rem;text-align:center;line-height:1.5}
+  .foot b{color:var(--terra)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="blob b3"></div><div class="blob b4"></div>
+
+  <main class="card">
+    <header>
+      <svg class="path" viewBox="0 0 540 170" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M-10,150 C120,120 90,60 210,70 C330,80 300,150 430,120 C500,104 520,70 560,64"
+              fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" opacity=".92"/>
+      </svg>
+      <span class="kicker">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="9" y="2.5" width="6" height="10" rx="3"/><path d="M6.5 11a5.5 5.5 0 0 0 11 0"/><path d="M12 16.5v3"/>
+          <path d="M3 22c3-2.5 6-2.5 9 0 3-2.5 6-2.5 9 0"/>
+        </svg>
+        DWeb Camp · Talk to the Land
+      </span>
+      <h1>Sign in to the network</h1>
+      <p class="way">The community knows the way. 🌱</p>
+    </header>
+
+    <div class="body">
+      <p class="lead">Leave your details and we'll follow up after camp.</p>
+      <form id="f" autocomplete="on">
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" required placeholder="Your name">
+
+        <label for="contact">Email or handle</label>
+        <input id="contact" name="contact" type="text" inputmode="email" placeholder="you@example.org or @handle">
+
+        <label for="org">Project / affiliation</label>
+        <input id="org" name="org" type="text" placeholder="Farm, collective, org…">
+
+        <label for="intent">What are you here to build or share?</label>
+        <textarea id="intent" name="intent" placeholder="A sentence or two…"></textarea>
+
+        <label class="consent">
+          <input id="consent" name="consent" type="checkbox">
+          <span>I'm OK with the CGO organizers keeping this to follow up.</span>
+        </label>
+
+        <button id="btn" type="submit">Submit</button>
+      </form>
+    </div>
+
+    <div id="ok" class="ok hidden">You're in — welcome to the network. See you at camp. 🌿</div>
+    <div id="err" class="err hidden">Something went wrong. Try once more?</div>
+    <p class="foot">
+      <b>Farm Hack Box</b> · Community Governed Organization<br>
+      DWeb Camp signups
+    </p>
+  </main>
+
+<script>
+  // ── Where signups are emailed ─────────────────────────────────────────────
+  // Same service the Tuckaway Food Commons site uses (FormSubmit).
+  // Change INBOX to whatever address should receive the signups.
+  const INBOX = "dorn@openteam.community";
+  const ENDPOINT = "https://formsubmit.co/ajax/" + INBOX;
+  // ──────────────────────────────────────────────────────────────────────────
+
+  const f = document.getElementById('f');
+  const btn = document.getElementById('btn');
+  const ok = document.getElementById('ok');
+  const err = document.getElementById('err');
+  f.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    err.classList.add('hidden');
+    btn.disabled = true; btn.textContent = 'Sending…';
+    const payload = {
+      name: name.value.trim(),
+      contact: contact.value.trim(),
+      org: org.value.trim(),
+      intent: intent.value.trim(),
+      consent: document.getElementById('consent').checked ? 'yes' : 'no',
+      _subject: 'DWeb Camp signup — ' + (name.value.trim() || 'anon'),
+      _template: 'table',
+      _captcha: 'false',
+    };
+    try {
+      const r = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload),
+        signal: AbortSignal.timeout(15000),
+      });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || (j.success !== true && j.success !== 'true')) throw new Error(j.message || ('http ' + r.status));
+      f.classList.add('hidden'); ok.classList.remove('hidden');
+    } catch (_) {
+      err.classList.remove('hidden');
+      btn.disabled = false; btn.textContent = 'Submit';
+    }
+  });
+</script>
+</body>
+</html>
